@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Sorry Drishti 🌸</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
+
+    :root {
+      --pink: #ff6b9d;
+      --purple: #c77dff;
+      --yellow: #ffd166;
+      --mint: #06d6a0;
+      --blue: #4cc9f0;
+      --bg: #fff0f6;
+      --card: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='28' font-size='28'%3E🌸%3C/text%3E%3C/svg%3E"), auto;
+    }
+
+    /* ─── FLOATING HEARTS BG ─── */
+    #hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart-float {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: floatUp linear infinite;
+      opacity: 0.35;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.35; }
+      90%  { opacity: 0.35; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(160deg, #ffe0f0 0%, #e8d5ff 50%, #d0f4ff 100%);
+    }
+
+    .hero-emoji-ring {
+      font-size: 4rem;
+      animation: spinBounce 3s ease-in-out infinite;
+    }
+    @keyframes spinBounce {
+      0%,100% { transform: scale(1) rotate(-5deg); }
+      50% { transform: scale(1.15) rotate(5deg); }
+    }
+
+    #hero h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2.8rem, 10vw, 5rem);
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0.5rem 0;
+      line-height: 1.1;
+    }
+
+    #hero p {
+      font-size: clamp(1rem, 4vw, 1.35rem);
+      color: #7c4da6;
+      max-width: 380px;
+      margin: 0.5rem auto 1.5rem;
+      font-weight: 700;
+    }
+
+    .scroll-hint {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #b06acd;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ─── SECTION SHARED ─── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 1.2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.6rem, 6vw, 2.4rem);
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ─── PHOTO GALLERY ─── */
+    #gallery {
+      background: linear-gradient(180deg, #fff0f6 0%, #f0e5ff 100%);
+    }
+
+    .gallery-intro {
+      text-align: center;
+      color: #9b5de5;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(199,125,255,0.25);
+      aspect-ratio: 3/4;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .photo-card:nth-child(1) { grid-column: span 2; aspect-ratio: 4/3; }
+    .photo-card:hover { transform: scale(1.04) rotate(-1deg); box-shadow: 0 16px 40px rgba(199,125,255,0.4); }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-card .sticker {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1.8rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      animation: wiggle 2s ease-in-out infinite;
+    }
+    @keyframes wiggle {
+      0%,100% { transform: rotate(-8deg); }
+      50% { transform: rotate(8deg); }
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.55), transparent);
+      color: white;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 1rem 0.6rem 0.5rem;
+      text-align: center;
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 100%;
+      max-height: 90svh;
+      border-radius: 1.5rem;
+      box-shadow: 0 0 60px rgba(199,125,255,0.5);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ─── CATCH THE HEARTS GAME ─── */
+    #game-section {
+      background: linear-gradient(180deg, #f0e5ff 0%, #d0f4ff 100%);
+    }
+
+    .game-subtitle {
+      text-align: center;
+      color: #5a6abf;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 380px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #e8f4ff 0%, #fce4ec 100%);
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 3px solid #c77dff;
+      box-shadow: 0 8px 32px rgba(199,125,255,0.3);
+      touch-action: none;
+    }
+
+    #basket {
+      position: absolute;
+      bottom: 12px;
+      width: 80px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      transition: left 0.05s;
+      user-select: none;
+    }
+
+    .falling-item {
+      position: absolute;
+      font-size: 1.8rem;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    #game-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 400px;
+      margin: 0.8rem auto 0;
+      padding: 0 0.5rem;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #7b3fa3;
+    }
+
+    #game-start-btn {
+      display: block;
+      margin: 1rem auto 0;
+      padding: 0.75rem 2.5rem;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(255,107,157,0.4);
+      transition: transform 0.2s;
+    }
+    #game-start-btn:active { transform: scale(0.95); }
+
+    #game-result {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 2rem;
+      max-width: 380px;
+      margin: 1rem auto 0;
+      box-shadow: 0 8px 32px rgba(199,125,255,0.25);
+    }
+    #game-result.show { display: block; }
+    #game-result h3 {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    #game-result p { color: #7c4da6; font-weight: 700; font-size: 1rem; }
+
+    /* ─── AUDIO PLAYER ─── */
+    #audio-section {
+      background: linear-gradient(180deg, #d0f4ff 0%, #ffe8f5 100%);
+    }
+
+    #audio-card {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 2.5rem;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 12px 40px rgba(199,125,255,0.3);
+      text-align: center;
+      border: 2px solid #f0c4e8;
+    }
+
+    .audio-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--purple);
+      box-shadow: 0 0 0 6px rgba(199,125,255,0.2);
+      display: block;
+      margin: 0 auto 1rem;
+    }
+
+    #audio-label {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.3rem;
+      color: var(--purple);
+      margin-bottom: 0.3rem;
+    }
+
+    #audio-sub {
+      font-size: 0.9rem;
+      color: #aaa;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    #play-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255,107,157,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    #play-btn:active { transform: scale(0.9); }
+
+    .sound-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      height: 40px;
+      margin: 0 auto;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .sound-bars.playing { opacity: 1; }
+    .bar {
+      width: 5px;
+      border-radius: 3px;
+      background: linear-gradient(to top, var(--pink), var(--purple));
+      animation: barDance 0.7s ease-in-out infinite alternate;
+    }
+    .bar:nth-child(1) { height: 12px; animation-delay: 0s; }
+    .bar:nth-child(2) { height: 24px; animation-delay: 0.1s; }
+    .bar:nth-child(3) { height: 36px; animation-delay: 0.2s; }
+    .bar:nth-child(4) { height: 28px; animation-delay: 0.3s; }
+    .bar:nth-child(5) { height: 16px; animation-delay: 0.15s; }
+    .bar:nth-child(6) { height: 30px; animation-delay: 0.25s; }
+    .bar:nth-child(7) { height: 20px; animation-delay: 0.05s; }
+    @keyframes barDance {
+      from { transform: scaleY(0.4); }
+      to   { transform: scaleY(1.1); }
+    }
+
+    /* ─── TIC TAC TOE ─── */
+    #ttt-section {
+      background: linear-gradient(180deg, #ffe8f5 0%, #fffde7 100%);
+    }
+
+    #ttt-subtitle {
+      text-align: center;
+      color: #e07b39;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    #ttt-status {
+      text-align: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #7b3fa3;
+      margin-bottom: 0.8rem;
+      min-height: 1.6rem;
+    }
+
+    #ttt-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .ttt-cell {
+      aspect-ratio: 1;
+      border-radius: 1.2rem;
+      background: white;
+      border: 2.5px solid #e8c4f5;
+      font-size: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 3px 10px rgba(199,125,255,0.15);
+    }
+    .ttt-cell:active { transform: scale(0.92); }
+    .ttt-cell.x { background: #fff0f9; }
+    .ttt-cell.o { background: #f0f9ff; }
+    .ttt-cell.win { background: linear-gradient(135deg, #ffe0f0, #e8d5ff); animation: pop 0.4s ease; }
+    @keyframes pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+    #ttt-reset {
+      display: block;
+      margin: 1.2rem auto 0;
+      padding: 0.65rem 2rem;
+      background: linear-gradient(135deg, var(--yellow), #ff9a3c);
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255,166,0,0.35);
+      transition: transform 0.2s;
+    }
+    #ttt-reset:active { transform: scale(0.95); }
+
+    /* ─── SORRY LETTER ─── */
+    #letter-section {
+      background: linear-gradient(180deg, #fffde7 0%, #fff0f6 100%);
+    }
+
+    #letter-card {
+      max-width: 420px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 2.5rem;
+      padding: 2.5rem 1.8rem;
+      box-shadow: 0 12px 40px rgba(255,107,157,0.2);
+      border: 2px dashed #f7c4d8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #letter-card::before {
+      content: '💌';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      filter: drop-shadow(0 4px 8px rgba(255,107,157,0.4));
+    }
+
+    #letter-card p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #5a3070;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    #letter-card p em {
+      color: var(--pink);
+      font-style: normal;
+      font-weight: 800;
+    }
+
+    .letter-signature {
+      margin-top: 1.5rem;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ─── CONFETTI BURST ─── */
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: confettiFall 1.5s ease-out forwards;
+    }
+    @keyframes confettiFall {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(300px) rotate(720deg); }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: linear-gradient(180deg, #fff0f6, #e8d5ff);
+      font-size: 1rem;
+      color: #9b5de5;
+      font-weight: 700;
+    }
+    footer span { font-size: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- Floating hearts background -->
+<div id="hearts-bg"></div>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <span id="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-emoji-ring">🌸</div>
+  <h1>Hey Drishti!</h1>
+  <p>I'm really really sorry. Please scroll down? 🥺</p>
+  <div class="scroll-hint">↓ scroll karo na ↓</div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section id="gallery">
+  <h2 class="section-title">Ye lo Chotta sa Gallery</h2>
+  <p class="gallery-intro">tap karo photos pe 👀</p>
+  <div class="photo-grid">
+    <div class="photo-card" onclick="openLightbox(this)">
+      <img src="20250326_155811.jpg" alt="Drishti thumbs up" loading="lazy" />
+      <span class="sticker">👍</span>
+      <div class="photo-caption">vibes only ✨</div>
+    </div>
+    <div class="photo-card" onclick="openLightbox(this)">
+      <img src="20250503_145522.jpg" alt="Drishti in saree" loading="lazy" />
+      <span class="sticker">🌹</span>
+      <div class="photo-caption">stunning 💃</div>
+    </div>
+    <div class="photo-card" onclick="openLightbox(this)">
+      <img src="20250824_173424.jpg" alt="Drishti at cafe" loading="lazy" />
+      <span class="sticker">☕</span>
+      <div class="photo-caption">golden hour 🌅</div>
+    </div>
+    <div class="photo-card" onclick="openLightbox(this)" style="grid-column: span 2; aspect-ratio: 16/9;">
+      <img src="20260222_204245.jpg" alt="Drishti night out" loading="lazy" />
+      <span class="sticker">🌙</span>
+      <div class="photo-caption">city lights 🌃</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CATCH THE HEARTS GAME ═══ -->
+<section id="game-section">
+  <h2 class="section-title">catch my sorry hearts 💜</h2>
+  <p class="game-subtitle">catch 💜 avoid 💔 — score 15 to win!</p>
+
+  <div id="game-container">
+    <div id="basket">🧺</div>
+  </div>
+
+  <div id="game-hud">
+    <span>❤️ Score: <strong id="score">0</strong></span>
+    <span>💔 Lives: <strong id="lives">3</strong></span>
+    <span>⏱️ <strong id="timer">30</strong>s</span>
+  </div>
+
+  <button id="game-start-btn" onclick="startGame()">Start Catching 💜</button>
+
+  <div id="game-result">
+    <h3 id="result-title">You Won! 🎉</h3>
+    <p id="result-msg">Thanks for catching my sorry hearts!</p>
+    <button id="game-start-btn" style="margin-top:1rem" onclick="resetGame()">Play Again 🔄</button>
+  </div>
+</section>
+
+<!-- ═══ AUDIO ═══ -->
+<section id="audio-section">
+  <h2 class="section-title">listen to me 🎙️</h2>
+  <div id="audio-card">
+    <img src="20250824_173424.jpg" alt="Me" class="audio-avatar" />
+    <div id="audio-label">A message for you</div>
+    <div id="audio-sub">from....wo toh pta hi hai tumhe😬</div>
+    <button id="play-btn" onclick="toggleAudio()" aria-label="Play/Pause">▶</button>
+    <div class="sound-bars" id="sound-bars">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <audio id="sorry-audio" src="Audio_F.mp4"></audio>
+  </div>
+</section>
+
+<!-- ═══ TIC TAC TOE ═══ -->
+<section id="ttt-section">
+  <h2 class="section-title">tic tac toe 🎮</h2>
+  <p id="ttt-subtitle">you're ❌, I'm ⭕ — I'll try my best... maybe 😈</p>
+  <div id="ttt-status">your turn! ❌</div>
+  <div id="ttt-board">
+    <div class="ttt-cell" onclick="tttClick(0)"></div>
+    <div class="ttt-cell" onclick="tttClick(1)"></div>
+    <div class="ttt-cell" onclick="tttClick(2)"></div>
+    <div class="ttt-cell" onclick="tttClick(3)"></div>
+    <div class="ttt-cell" onclick="tttClick(4)"></div>
+    <div class="ttt-cell" onclick="tttClick(5)"></div>
+    <div class="ttt-cell" onclick="tttClick(6)"></div>
+    <div class="ttt-cell" onclick="tttClick(7)"></div>
+    <div class="ttt-cell" onclick="tttClick(8)"></div>
+  </div>
+  <button id="ttt-reset" onclick="tttReset()">New Game 🔄</button>
+</section>
+
+<!-- ═══ SORRY LETTER ═══ -->
+<section id="letter-section">
+  <h2 class="section-title">from the heart 💌</h2>
+  <div id="letter-card">
+    <p>
+      Hey <em>Drishti</em>,<br><br>
+      Sorry for my Behavior<br>
+      I wanted to reach out and say I’m sorry for how things went down the other day.br>
+      but I mean this one <em>with my whole heart</em>.<br><br>
+      You mean <em>so much</em> to me,<br>
+      and seeing you upset because of <em>me</em>... kills me.<br><br>
+      I'm <em>genuinely, deeply, stupidly</em> sorry. 🥺<br><br>
+      Forgive me? Pretty please? 🌸<br>
+      I promise I'll make it up to you.<br><br>
+      (Also I made you a whole website so that counts for something right 👉👈)
+    </p>
+    <div class="letter-signature">— Adi 💜</div>
+  </div>
+</section>
+
+<footer>
+  made with <span>💜</span> and <span>🥺</span> energy — just for you, Drishti
+</footer>
+
+<script>
+  /* ─── FLOATING HEARTS ─── */
+  const emojis = ['💜','💕','🌸','✨','💫','🥺','💗','🌷'];
+  const bg = document.getElementById('hearts-bg');
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-float';
+    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (1 + Math.random() * 1.5) + 'rem';
+    h.style.animationDuration = (8 + Math.random() * 12) + 's';
+    h.style.animationDelay = (Math.random() * 10) + 's';
+    bg.appendChild(h);
+  }
+
+  /* ─── LIGHTBOX ─── */
+  function openLightbox(card) {
+    const src = card.querySelector('img').src;
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  document.getElementById('lightbox-close').onclick = () =>
+    document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox').onclick = (e) => {
+    if (e.target === document.getElementById('lightbox'))
+      document.getElementById('lightbox').classList.remove('open');
+  };
+
+  /* ─── CONFETTI ─── */
+  function burst(x, y, count = 20) {
+    const colors = ['#ff6b9d','#c77dff','#ffd166','#06d6a0','#4cc9f0'];
+    for (let i = 0; i < count; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = (x + (Math.random() - 0.5) * 120) + 'px';
+      c.style.top = (y + (Math.random() - 0.5) * 60) + 'px';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.transform = `rotate(${Math.random()*360}deg)`;
+      c.style.animationDuration = (1 + Math.random()) + 's';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 2500);
+    }
+  }
+
+  /* ─── CATCH GAME ─── */
+  let gameRunning = false;
+  let score = 0, lives = 3, timeLeft = 30;
+  let basketX = 160;
+  let gameInterval, timerInterval, spawnInterval;
+  let isDragging = false;
+  let gameContainer, basket;
+
+  function initGame() {
+    gameContainer = document.getElementById('game-container');
+    basket = document.getElementById('basket');
+    basket.style.left = (gameContainer.clientWidth / 2 - 40) + 'px';
+    basketX = gameContainer.clientWidth / 2 - 40;
+
+    // Touch controls
+    gameContainer.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const rect = gameContainer.getBoundingClientRect();
+      const tx = e.touches[0].clientX - rect.left - 40;
+      moveBasket(tx);
+    }, { passive: false });
+
+    gameContainer.addEventListener('mousemove', (e) => {
+      if (!gameRunning) return;
+      const rect = gameContainer.getBoundingClientRect();
+      moveBasket(e.clientX - rect.left - 40);
+    });
+  }
+
+  function moveBasket(x) {
+    const max = gameContainer.clientWidth - 80;
+    basketX = Math.max(0, Math.min(x, max));
+    basket.style.left = basketX + 'px';
+  }
+
+  function startGame() {
+    document.getElementById('game-start-btn').style.display = 'none';
+    document.getElementById('game-result').classList.remove('show');
+    score = 0; lives = 3; timeLeft = 30;
+    updateHUD();
+    gameRunning = true;
+    if (!gameContainer) initGame();
+
+    spawnInterval = setInterval(spawnItem, 900);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById('timer').textContent = timeLeft;
+      if (timeLeft <= 0) endGame();
+    }, 1000);
+  }
+
+  function spawnItem() {
+    const item = document.createElement('div');
+    item.className = 'falling-item';
+    const isGood = Math.random() > 0.3;
+    item.textContent = isGood ? '💜' : '💔';
+    item.dataset.good = isGood;
+    const w = gameContainer.clientWidth - 40;
+    item.style.left = (Math.random() * w) + 'px';
+    item.style.top = '-30px';
+    item.style.fontSize = (1.4 + Math.random() * 0.8) + 'rem';
+    gameContainer.appendChild(item);
+
+    let top = -30;
+    const speed = 2.5 + Math.random() * 2;
+    const iv = setInterval(() => {
+      if (!gameRunning) { clearInterval(iv); item.remove(); return; }
+      top += speed;
+      item.style.top = top + 'px';
+      // check collision
+      const bRect = basket.getBoundingClientRect();
+      const iRect = item.getBoundingClientRect();
+      if (iRect.bottom >= bRect.top && iRect.top <= bRect.bottom &&
+          iRect.right >= bRect.left && iRect.left <= bRect.right) {
+        clearInterval(iv);
+        item.remove();
+        if (item.dataset.good === 'true') {
+          score++;
+          document.getElementById('score').textContent = score;
+          burst(bRect.left + 40, bRect.top, 10);
+          if (score >= 15) endGame(true);
+        } else {
+          lives--;
+          document.getElementById('lives').textContent = lives;
+          if (lives <= 0) endGame(false);
+        }
+      }
+      if (top > gameContainer.clientHeight + 30) {
+        clearInterval(iv); item.remove();
+      }
+    }, 16);
+  }
+
+  function endGame(won) {
+    gameRunning = false;
+    clearInterval(spawnInterval);
+    clearInterval(timerInterval);
+    document.querySelectorAll('.falling-item').forEach(i => i.remove());
+
+    const result = document.getElementById('game-result');
+    if (won || score >= 15) {
+      document.getElementById('result-title').textContent = 'You won! 🎉';
+      document.getElementById('result-msg').textContent = `You caught ${score} sorry hearts! ily 💜`;
+      burst(window.innerWidth/2, window.innerHeight/2, 40);
+    } else {
+      document.getElementById('result-title').textContent = lives <= 0 ? 'Oops! 💔' : 'Time\'s up! ⏰';
+      document.getElementById('result-msg').textContent = `Score: ${score} — try again? 🥺`;
+    }
+    result.classList.add('show');
+  }
+
+  function resetGame() {
+    document.getElementById('game-result').classList.remove('show');
+    document.getElementById('game-start-btn').style.display = 'block';
+    document.getElementById('score').textContent = '0';
+    document.getElementById('lives').textContent = '3';
+    document.getElementById('timer').textContent = '30';
+  }
+
+  function updateHUD() {
+    document.getElementById('score').textContent = score;
+    document.getElementById('lives').textContent = lives;
+    document.getElementById('timer').textContent = timeLeft;
+  }
+
+  window.addEventListener('load', initGame);
+
+  /* ─── AUDIO ─── */
+  let audioPlaying = false;
+  const audio = document.getElementById('sorry-audio');
+  const bars = document.getElementById('sound-bars');
+  const playBtn = document.getElementById('play-btn');
+
+  function toggleAudio() {
+    if (audioPlaying) {
+      audio.pause();
+      audioPlaying = false;
+      playBtn.textContent = '▶';
+      bars.classList.remove('playing');
+    } else {
+      audio.play().catch(() => {});
+      audioPlaying = true;
+      playBtn.textContent = '⏸';
+      bars.classList.add('playing');
+    }
+  }
+
+  audio.addEventListener('ended', () => {
+    audioPlaying = false;
+    playBtn.textContent = '▶';
+    bars.classList.remove('playing');
+    burst(window.innerWidth/2, 400, 30);
+  });
+
+  /* ─── TIC TAC TOE (AI deliberately loses) ─── */
+  let tttBoard = Array(9).fill(null);
+  let tttPlayer = 'X';
+  let tttGameOver = false;
+  const tttCells = document.querySelectorAll('.ttt-cell');
+  const tttStatus = document.getElementById('ttt-status');
+  const tttSymbols = { X: '❌', O: '⭕' };
+  const winLines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+  function tttClick(i) {
+    if (tttGameOver || tttBoard[i] || tttPlayer !== 'X') return;
+    tttSet(i, 'X');
+    if (tttCheck()) return;
+    tttPlayer = 'O';
+    tttStatus.textContent = 'thinking... ⭕';
+    setTimeout(aiMove, 600);
+  }
+
+  function tttSet(i, p) {
+    tttBoard[i] = p;
+    tttCells[i].textContent = tttSymbols[p];
+    tttCells[i].classList.add(p.toLowerCase());
+  }
+
+  function aiMove() {
+    if (tttGameOver) return;
+    // Deliberately bad AI: occasionally block but mostly plays randomly/badly
+    const empty = tttBoard.map((v, i) => v === null ? i : -1).filter(i => i >= 0);
+    if (!empty.length) { tttCheck(); return; }
+
+    // Check if X is about to win → sometimes block (only 30% chance)
+    let move = -1;
+    for (const line of winLines) {
+      const [a, b, c] = line;
+      const vals = [tttBoard[a], tttBoard[b], tttBoard[c]];
+      if (vals.filter(v => v === 'X').length === 2 && vals.includes(null)) {
+        if (Math.random() < 0.3) {
+          move = line[vals.indexOf(null)];
+          break;
+        }
+      }
+    }
+
+    if (move === -1) move = empty[Math.floor(Math.random() * empty.length)];
+
+    tttSet(move, 'O');
+    if (tttCheck()) return;
+    tttPlayer = 'X';
+    tttStatus.textContent = 'your turn! ❌';
+  }
+
+  function tttCheck() {
+    for (const [a, b, c] of winLines) {
+      if (tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) {
+        [a, b, c].forEach(i => tttCells[i].classList.add('win'));
+        tttGameOver = true;
+        if (tttBoard[a] === 'X') {
+          tttStatus.textContent = 'You won!! 🎉 see, you always win 💜';
+          burst(window.innerWidth/2, window.innerHeight/2, 35);
+        } else {
+          tttStatus.textContent = 'I won... sorry about that too 😬';
+        }
+        return true;
+      }
+    }
+    if (!tttBoard.includes(null)) {
+      tttGameOver = true;
+      tttStatus.textContent = "it's a draw! just like us 💜";
+      return true;
+    }
+    return false;
+  }
+
+  function tttReset() {
+    tttBoard = Array(9).fill(null);
+    tttGameOver = false;
+    tttPlayer = 'X';
+    tttCells.forEach(c => { c.textContent = ''; c.className = 'ttt-cell'; });
+    tttStatus.textContent = 'your turn! ❌';
+  }
+</script>
+</body>
+</html>
